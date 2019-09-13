@@ -3,6 +3,7 @@ import sys
 import os
 
 def create_tbl_for_csv(file, tbl):
+    ## create table with cols from csv file
     qry = 'DROP TABLE IF EXISTS {tbl}; CREATE TABLE {tbl}('.format(tbl=tbl)
     with open(file) as f:
         l = f.readline().strip()
@@ -14,6 +15,7 @@ def create_tbl_for_csv(file, tbl):
     qry += ');'
     # print(qry)
 
+    ## import csv data into table
     eng = sql.create_engine('postgresql://gpadmin:pivotal@localhost:5432/gpadmin')
     with eng.connect() as conn:
         conn.execute(qry)
@@ -21,6 +23,7 @@ def create_tbl_for_csv(file, tbl):
     os.system(bash)
 
 if __name__ == '__main__':
+    ## opt: [csv_filename], [tbl_created_name]
     file = sys.argv[1]
     tbl = sys.argv[2]
     create_tbl_for_csv(file, tbl)
